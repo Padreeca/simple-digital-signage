@@ -86,6 +86,11 @@ def start_loop():
         image_erro.withdraw()
         messagebox.showerror("Erro", "Nome da imagem com Caracter Especial")
         image_erro.destroy()
+    except ValueError as e:
+        falta_erro = Tk()
+        falta_erro.withdraw()
+        messagebox.showerror("Erro", "Faltam informações")
+        falta_erro.destroy()
 
 validation = screen.register(in_validate)
 
