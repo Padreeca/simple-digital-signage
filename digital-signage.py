@@ -13,6 +13,7 @@
 import os
 from tkinter import *
 from tkinter import filedialog
+from tkinter import messagebox
 import cv2
 
 screen = Tk()
@@ -26,20 +27,25 @@ telinha_aberta = True
 def select_folder():
     global images_folder
     global list_files
-    global image_file
 
     images_folder = filedialog.askdirectory()
     list_files = os.listdir(images_folder)
+    print(f"Caminho da imagem: {list_files}")
     verify_end_all()
-
+    
 def verify_end_all():
     global image_file
-
+    image_file = None
     for img_file in list_files:
         if img_file.lower().endswith(('.png', '.jpg', '.jpeg','.avif','.webp')):
             image_file = os.path.join(images_folder,img_file)
-            print(image_file)
-
+            print(f"Caminho da imagem: {image_file}")
+    if not image_file:
+            none_image=Tk()
+            none_image.withdraw()
+            messagebox.showerror("Erro", "Arquivo sem imagem ")
+            none_image.destroy()
+                    
 def in_validate(P):
     if P.isdigit() or P == "":
         return True
@@ -47,38 +53,43 @@ def in_validate(P):
         return False
     
 def start_loop():
-    global images_folder
-    global list_files
-    aberto=True
+    try:
+        global images_folder
+        global list_files
+        aberto=True
 
-    minutes = int(time_entry.get())
+        minutes = int(time_entry.get())
 
-    screen.destroy()  ######### fechar telinha
+        screen.destroy()  ######### fechar telinha
 
-    while aberto == True:
-        for img_file in list_files:
-            if img_file.lower().endswith(('.png', '.jpg', '.jpeg','.avif','.webp')):
-                image_file = os.path.join(images_folder, img_file)
-                print(image_file)
-                
-                mostrar = cv2.imread(image_file)
+        while aberto == True:
+            for img_file in list_files:
+                if img_file.lower().endswith(('.png', '.jpg', '.jpeg','.avif','.webp')):
+                    image_file = os.path.join(images_folder, img_file)
+                    print(image_file)
+                    
+                    mostrar = cv2.imread(image_file)
 
-                cv2.namedWindow('Fullscreen', cv2.WINDOW_NORMAL)
-                cv2.setWindowProperty('Fullscreen', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
-                cv2.imshow('Fullscreen', mostrar)
+                    cv2.namedWindow('Fullscreen', cv2.WINDOW_NORMAL)
+                    cv2.setWindowProperty('Fullscreen', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+                    cv2.imshow('Fullscreen', mostrar)
 
-                key = cv2.waitKey(minutes * 1000) & 0xFF
+                    key = cv2.waitKey(minutes * 1000) & 0xFF
 
-                if key == 27: #ESC
-                    aberto = False
-                    break
-        if aberto==False:
-            cv2.destroyAllWindows()
-    
+                    if key == 27: #ESC
+                        aberto = False
+                        break
+            if aberto==False:
+                cv2.destroyAllWindows()
+    except cv2.error as e:
+        image_erro = Tk()
+        image_erro.withdraw()
+        messagebox.showerror("Erro", "Nome da imagem com Caracter Especial")
+        image_erro.destroy()
 
 validation = screen.register(in_validate)
 
-folder_btn = Button(screen, text="Selecionar Pasta", command=select_folder, padx=40)
+folder_btn = Button(screen, text="Selecionar Pasta de Imagens", command=select_folder, padx=20)
 folder_btn.grid(column=0, row=0, pady=(50,20), padx=50)
 
 quest_lbl = Label(screen, text="Tempo entre as telas:")
@@ -94,4 +105,3 @@ confirm_btn = Button(screen, text="OK", command=start_loop, padx=20)
 confirm_btn.grid(column=0, row=4, pady=10)
 
 screen.mainloop() ############ Não fechar telinha
-
