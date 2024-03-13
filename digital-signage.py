@@ -74,7 +74,7 @@ def start_loop():
                     cv2.setWindowProperty('Fullscreen', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
                     cv2.imshow('Fullscreen', mostrar)
 
-                    key = cv2.waitKey(minutes * 1000) & 0xFF
+                    key = cv2.waitKey(minutes * 60000) & 0xFF
 
                     if key == 27: #ESC
                         aberto = False
