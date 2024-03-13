@@ -7,7 +7,6 @@ import cv2
 screen = Tk()
 screen.title("Digital Signage")
 screen.config(background="#e9e9e9")
-
 screen.iconbitmap("logo.ico")
 
 images_folder = None
@@ -88,11 +87,6 @@ def start_loop():
 
 validation = screen.register(in_validate)
 
-# logo = PhotoImage(file="logo.png")
-# logo = logo.subsample(1,1)
-# foto = Label(image=logo, bg="#ffffff")
-# foto.place(x=0, y=0, relwidth=1, relheight=1)
-
 folder_btn = Button(screen, text="Selecionar Pasta de Imagens", command=select_folder, padx=20, bg="#ffffff", bd=3)
 folder_btn.grid(column=0, row=0, pady=(30,20), padx=50)
 
@@ -108,4 +102,4 @@ time_entry.grid(column=0, row=3, pady=(10,10))
 confirm_btn = Button(screen, text="OK", command=start_loop, padx=20, width=10, bg="#ffffff", bd=4)
 confirm_btn.grid(column=0, row=4, pady=(0,15))
 
-screen.mainloop() ############ Não fechar telinha
+screen.mainloop()
