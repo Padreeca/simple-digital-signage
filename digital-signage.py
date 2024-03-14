@@ -31,15 +31,13 @@ def verify_end_all():
     for img_file in list_files:
         if img_file.lower().endswith(('.png', '.jpg', '.jpeg','.avif','.webp')):
             image_file = os.path.join(images_folder,img_file)
-            
+
     if not image_file:
             none_image=Tk()
             none_image.withdraw()
             messagebox.showerror("Erro", "Arquivo sem imagem ")
             none_image.destroy()
             images_folder=None
-
-
 
 def in_validate(P):
     if P.isdigit() or P == "":
