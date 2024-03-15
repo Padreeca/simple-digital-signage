@@ -3,6 +3,8 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
 import cv2
+import numpy as np
+import re
 
 screen = Tk()
 screen.title("Digital Signage")
@@ -71,7 +73,9 @@ def start_loop():
                         if img_file.lower().endswith(('.png', '.jpg', '.jpeg','.avif','.webp')):
                             image_file = os.path.join(images_folder, img_file)
 
-                            mostrar = cv2.imread(image_file)
+                            image_file = re.sub(r'[\\/]', r'\\\\', image_file)
+
+                            mostrar = cv2.imdecode(np.fromfile(r'' + image_file, np.uint8), cv2.IMREAD_UNCHANGED)
 
                             cv2.namedWindow('Fullscreen', cv2.WINDOW_NORMAL)
                             cv2.setWindowProperty('Fullscreen', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
@@ -95,18 +99,18 @@ def start_loop():
 validation = screen.register(in_validate)
 
 folder_btn = Button(screen, text="Selecionar Pasta de Imagens", command=select_folder, padx=20, bg="#ffffff", bd=3)
-folder_btn.grid(column=0, row=0, pady=(30,20), padx=50)
+folder_btn.grid(column=0, row=0, pady=(30,0), padx=50)
 
 quest_lbl = Label(screen, text="Tempo entre as telas:",bg="#e9e9e9",font=('Arial', 12))
-quest_lbl.grid(column=0, row=1, padx=100, pady=(20,0))
+quest_lbl.grid(column=0, row=2, padx=100, pady=(20,0))
 
 in_minutes_lbl = Label(screen, font=('Arial', 10), text="(em minutos)",bg="#e9e9e9")
-in_minutes_lbl.grid(column=0, row=2)
+in_minutes_lbl.grid(column=0, row=3)
 
 time_entry = Entry(screen,font=('Arial', 12), validate="key", validatecommand=(validation, "%P"),width=8,justify='center', bg="#ffffff", bd=2)
-time_entry.grid(column=0, row=3, pady=(10,10))
+time_entry.grid(column=0, row=4, pady=(10,10))
 
 confirm_btn = Button(screen, text="OK", command=start_loop, padx=20, width=10, bg="#ffffff", bd=4)
-confirm_btn.grid(column=0, row=4, pady=(0,15))
+confirm_btn.grid(column=0, row=5, pady=(0,15))
 
 screen.mainloop()
