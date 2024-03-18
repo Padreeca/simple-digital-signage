@@ -9,7 +9,7 @@ import re
 screen = Tk()
 screen.title("Digital Signage")
 screen.config(background="#e9e9e9")
-screen.iconbitmap("logo.ico")
+# screen.iconbitmap("logo.ico")
 
 images_folder = None
 list_files = None
@@ -104,7 +104,7 @@ folder_btn.grid(column=0, row=0, pady=(30,0), padx=50)
 quest_lbl = Label(screen, text="Tempo entre as telas:",bg="#e9e9e9",font=('Arial', 12))
 quest_lbl.grid(column=0, row=2, padx=100, pady=(20,0))
 
-in_minutes_lbl = Label(screen, font=('Arial', 10), text="(em minutos)",bg="#e9e9e9")
+in_minutes_lbl = Label(screen, font=('Arial', 10), text="(em segundos)",bg="#e9e9e9")
 in_minutes_lbl.grid(column=0, row=3)
 
 time_entry = Entry(screen,font=('Arial', 12), validate="key", validatecommand=(validation, "%P"),width=8,justify='center', bg="#ffffff", bd=2)
